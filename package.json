@@ -1,22 +1,22 @@
 {
   "name": "@ostro/container",
   "version": "0.0.0-alpha.0",
-  "description": "container module for nodejs",
-  "engines": {
-    "node": ">= 12.0"
-  },
+  "description": "Container module for OstroJS",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@ostro/support": "^0.0.0-alpha.0",
-    "@ostro/contracts": "^0.0.0-alpha.0",
+    "@ostro/support": "^0.0.0-alpha",
+    "@ostro/contracts": "^0.0.0-alpha",
     "lodash.set": "^4.3.2"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "engineStrict": true,
   "keywords": [
-    "container",
-    "framework container"
+    "container"
   ],
   "author": "amar",
   "license": "MIT",
