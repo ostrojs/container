@@ -161,6 +161,11 @@ class Application extends Macroable.extend(ApplicationContract) {
         return key ? this[key] : this;
     }
 
+    environment(environment){
+        environment = Array.isArray(environment) ? environment : [environment];
+        return environment.includes(process.env.NODE_ENV)
+    }
+
     forgetInstance($abstract) {
         delete this.$instances[$abstract];
     }

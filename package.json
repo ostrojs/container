@@ -2,7 +2,7 @@
   "name": "@ostro/container",
   "version": "0.0.0-alpha.1",
   "description": "Container module for OstroJS",
-  "main": "app.js",
+  "main": "application.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,7 +16,9 @@
   },
   "engineStrict": true,
   "keywords": [
-    "container"
+    "container",
+    "application container",
+    "framework container"
   ],
   "author": "amar",
   "license": "MIT",
