@@ -48,6 +48,15 @@ class Application extends Macroable.extend(ApplicationContract) {
         return this.resolve($abstract, $parameters, true);
     }
 
+    whenHas(key, done = () => {}, error = () => {}) {
+        key = this[key]
+        if (typeof key != undefined) {
+            done(key)
+        } else {
+            error()
+        }
+    }
+
     resolve($abstract, $parameters = [], $make = false) {
 
         if (typeof $abstract == 'string') {
@@ -161,7 +170,7 @@ class Application extends Macroable.extend(ApplicationContract) {
         return key ? this[key] : this;
     }
 
-    environment(environment){
+    environment(environment) {
         environment = Array.isArray(environment) ? environment : [environment];
         return environment.includes(process.env.NODE_ENV)
     }
