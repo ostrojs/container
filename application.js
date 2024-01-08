@@ -2,7 +2,7 @@ require('@ostro/support/helpers')
 const path = require('path')
 const fs = require('fs')
 const ObjectSet = require('lodash.set')
-const { IsClass, isFunction } = require('@ostro/support/function')
+const { IsClass, isFunction, isset } = require('@ostro/support/function')
 const ApplicationContract = require('@ostro/contracts/container/application')
 const { Macroable } = require('@ostro/support/macro')
 
@@ -12,6 +12,12 @@ class Application extends Macroable.extend(ApplicationContract) {
 
     $bindings = {};
 
+    $aliases = {};
+
+    $resolved = {};
+
+    $scopedInstances = {};
+
     alias(alias = {}) {
         for (let aliasKey in alias) {
             global[aliasKey] = alias[aliasKey];
@@ -19,7 +25,7 @@ class Application extends Macroable.extend(ApplicationContract) {
     }
 
     wrap($callback, $parameters = []) {
-        return function() {
+        return function () {
             return this.apply($callback, $parameters);
         };
     }
@@ -48,7 +54,7 @@ class Application extends Macroable.extend(ApplicationContract) {
         return this.resolve($abstract, $parameters, true);
     }
 
-    whenHas(key, done = () => {}, error = () => {}) {
+    whenHas(key, done = () => { }, error = () => { }) {
         key = this[key]
         if (typeof key != undefined) {
             done(key)
@@ -82,7 +88,8 @@ class Application extends Macroable.extend(ApplicationContract) {
                             $abstract = new $abstract(...$parameters)
                         }
                     }
-                    this.$instances[key] = $abstract
+                    this.$instances[key] = $abstract;
+                    $abstract;
                 }
             } else {
                 if ($make) {
@@ -92,9 +99,9 @@ class Application extends Macroable.extend(ApplicationContract) {
             }
 
         }
-        if ($make) {
-            $abstract = this.build($abstract, $parameters)
-        }
+
+        $abstract = this.build($abstract, $parameters);
+
         return typeof $abstract == 'object' ? $abstract : undefined
 
     }
@@ -110,7 +117,7 @@ class Application extends Macroable.extend(ApplicationContract) {
     build($concrete, $parameters = []) {
 
         if (this.isBuildable($concrete)) {
-            if (typeof $concrete.prototype.$app == 'undefined') {
+            if ($concrete.prototype && typeof $concrete.prototype.$app == 'undefined') {
                 $concrete.prototype.$app = this
             }
             if (IsClass($concrete)) {
@@ -127,6 +134,13 @@ class Application extends Macroable.extend(ApplicationContract) {
     getBindings() {
         return this.$bindings;
     }
+
+    getAlias($abstract) {
+        return isset(this.$aliases[$abstract])
+            ? this.getAlias(this.$aliases[$abstract])
+            : $abstract;
+    }
+
 
     bind(key, callback, $parameters = [], shared = false) {
         if (typeof key == 'string' && !callback) {
@@ -153,6 +167,10 @@ class Application extends Macroable.extend(ApplicationContract) {
         return callback
     }
 
+    bound(key) {
+        return this.$bindings[key] && this.$bindings[key].shared == false
+    }
+
     singleton($abstract, $concrete, ...$parameters) {
         return this.bind($abstract, $concrete, $parameters, true);
     }
@@ -164,6 +182,41 @@ class Application extends Macroable.extend(ApplicationContract) {
         }
         return this.$instances[$abstract]
 
+    }
+
+    flush() {
+        this.$aliases = {};
+        this.$resolved = {};
+        this.$bindings = {};
+        this.$instances = {};
+        this.$scopedInstances = {};
+    }
+
+    forgetInstance($abstract) {
+        delete this.$instances[$abstract];
+    }
+
+
+    forgetInstances() {
+        this.$instances = {};
+    }
+
+    forgetScopedInstances() {
+        for (let $scoped in this.$scopedInstances) {
+            delete this.$instances[$scoped];
+        }
+    }
+
+    getInstance() {
+        if (is_null(this.$instance)) {
+            this.$instance = new this.constructor;
+        }
+
+        return this.$instance;
+    }
+
+    setInstance($container = null) {
+        return this.$instance = $container;
     }
 
     app(key) {
@@ -187,8 +240,13 @@ class Application extends Macroable.extend(ApplicationContract) {
 
         return this.$instances[$abstract];
     }
-    __get(target, method) {
-        return target.resolve(method)
+
+    __get(target, key) {
+        return target.resolve(key)
+    }
+
+    __set(target, key, value) {
+        target[key] = value;
     }
 
 }
