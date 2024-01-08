@@ -1,13 +1,13 @@
 {
   "name": "@ostro/container",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Container module for OstroJS",
   "main": "application.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@ostro/support": "^1.0.2",
+    "@ostro/support": "^1.2.0",
     "@ostro/contracts": "^1.0.0",
     "lodash.set": "^4.3.2"
   },
