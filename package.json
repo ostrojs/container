@@ -1,6 +1,6 @@
 {
   "name": "@ostro/container",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Container module for OstroJS",
   "main": "application.js",
   "scripts": {
