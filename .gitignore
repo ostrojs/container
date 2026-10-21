@@ -1,2 +1,8 @@
-.github
-.npmignore
+node_modules/
+coverage/
+package-lock.json
+.DS_Store
+
+build/
+AGY.md
+AYG.md
