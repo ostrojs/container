@@ -1,6 +1,6 @@
 {
     "name": "@ostro/container",
-    "version": "2.0.0-alpha.1",
+    "version": "2.0.0-alpha.2",
     "description": "Container module for OstroJS",
     "main": "build/application.js",
     "scripts": {
@@ -10,8 +10,8 @@
         "clean": "rm -rf build coverage"
     },
     "dependencies": {
-        "@ostro/contracts": "^2.0.0-alpha.1",
-        "@ostro/support": "^2.0.0-alpha.1",
+        "@ostro/contracts": "^2.0.0-alpha.2",
+        "@ostro/support": "^2.0.0-alpha.2",
         "lodash.set": "^4.3.2"
     },
     "engines": {
@@ -33,17 +33,17 @@
         "url": "https://github.com/ostrojs/container/issues"
     },
     "homepage": "https://github.com/ostrojs/container#readme",
-    "types": "build/application.d.ts",
+    "types": "build/types/application.d.ts",
     "files": [
         "build"
     ],
     "exports": {
         ".": {
-            "types": "./build/application.d.ts",
+            "types": "./build/types/application.d.ts",
             "default": "./build/application.js"
         },
         "./*": {
-            "types": "./build/*.d.ts",
+            "types": "./build/types/*.d.ts",
             "default": "./build/*.js"
         }
     },
