@@ -1,6 +1,6 @@
 {
     "name": "@ostro/container",
-    "version": "2.0.0-alpha.4",
+    "version": "2.0.0-alpha.5",
     "description": "Container module for OstroJS",
     "main": "build/application.js",
     "scripts": {
@@ -11,8 +11,8 @@
         "lint:check": "tsc --noEmit -p tsconfig.build.json"
     },
     "dependencies": {
-        "@ostro/contracts": "^2.0.0-alpha.4",
-        "@ostro/support": "^2.0.0-alpha.4",
+        "@ostro/contracts": "^2.0.0-alpha.5",
+        "@ostro/support": "^2.0.0-alpha.5",
         "lodash.set": "^4.3.2"
     },
     "engines": {
@@ -56,7 +56,7 @@
         "jest": "^30.5.2",
         "ts-jest": "^29.4.15",
         "ts-node": "^10.9.2",
-        "@ostro/builder": "^2.0.0-alpha.2"
+        "@ostro/builder": "^2.0.0-alpha.3"
     },
     "overrides": {
         "sprintf-js": "^1.1.3",
