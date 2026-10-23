@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@ostro/contracts": "^2.0.0-alpha.5",
-        "@ostro/support": "^2.0.0-alpha.5",
+        "@ostro/support": "^2.0.0-alpha.6",
         "lodash.set": "^4.3.2"
     },
     "engines": {
