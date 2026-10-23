@@ -204,7 +204,10 @@ class Application extends Macroable.extend(ApplicationContract) implements ICont
                 targetPath = path.resolve(targetPath);
             }
             const mod: any = require(targetPath);
-            return (mod && (mod.__esModule || mod.default) && mod.default ? mod.default : mod) as T;
+            if (mod && (mod.__esModule || Object.prototype.hasOwnProperty.call(mod, 'default')) && mod.default) {
+                return mod.default as T;
+            }
+            return mod as T;
         }
         return dir as T;
     }
