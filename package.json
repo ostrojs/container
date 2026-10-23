@@ -1,6 +1,6 @@
 {
     "name": "@ostro/container",
-    "version": "2.0.0-alpha.8",
+    "version": "2.0.0-alpha.9",
     "description": "Container module for OstroJS",
     "main": "application.js",
     "scripts": {
@@ -11,8 +11,8 @@
         "lint:check": "tsc --noEmit -p tsconfig.build.json"
     },
     "dependencies": {
-        "@ostro/contracts": "^2.0.0-alpha.8",
-        "@ostro/support": "^2.0.0-alpha.9",
+        "@ostro/contracts": "^2.0.0-alpha.9",
+        "@ostro/support": "^2.0.0-alpha.10",
         "lodash.set": "^4.3.2"
     },
     "engines": {
@@ -46,7 +46,7 @@
         }
     },
     "devDependencies": {
-        "@ostro/builder": "^2.0.0-alpha.6",
+        "@ostro/builder": "^2.0.0-alpha.7",
         "@types/jest": "^30.0.0",
         "@types/node": "^22.0.0",
         "c8": "^10.1.3",
