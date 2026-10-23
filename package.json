@@ -1,8 +1,8 @@
 {
     "name": "@ostro/container",
-    "version": "2.0.0-alpha.5",
+    "version": "2.0.0-alpha.6",
     "description": "Container module for OstroJS",
-    "main": "build/application.js",
+    "main": "application.js",
     "scripts": {
         "test": "npx c8 npx jest",
         "build": "npm run lint:check && tsc -p tsconfig.build.json && node scripts/build.js",
@@ -11,8 +11,8 @@
         "lint:check": "tsc --noEmit -p tsconfig.build.json"
     },
     "dependencies": {
-        "@ostro/contracts": "^2.0.0-alpha.5",
-        "@ostro/support": "^2.0.0-alpha.6",
+        "@ostro/contracts": "^2.0.0-alpha.6",
+        "@ostro/support": "^2.0.0-alpha.7",
         "lodash.set": "^4.3.2"
     },
     "engines": {
@@ -34,18 +34,15 @@
         "url": "https://github.com/ostrojs/container/issues"
     },
     "homepage": "https://github.com/ostrojs/container#readme",
-    "types": "build/types/application.d.ts",
-    "files": [
-        "build"
-    ],
+    "types": "types/application.d.ts",
     "exports": {
         ".": {
-            "types": "./build/types/application.d.ts",
-            "default": "./build/application.js"
+            "types": "./types/application.d.ts",
+            "default": "./application.js"
         },
         "./*": {
-            "types": "./build/types/*.d.ts",
-            "default": "./build/*.js"
+            "types": "./types/*.d.ts",
+            "default": "./*.js"
         }
     },
     "devDependencies": {
@@ -56,7 +53,7 @@
         "jest": "^30.5.2",
         "ts-jest": "^29.4.15",
         "ts-node": "^10.9.2",
-        "@ostro/builder": "^2.0.0-alpha.3"
+        "@ostro/builder": "^2.0.0-alpha.4"
     },
     "overrides": {
         "sprintf-js": "^1.1.3",
