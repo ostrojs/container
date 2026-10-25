@@ -1,10 +1,11 @@
+import { describe, beforeEach, test, expect } from '@jest/globals';
 import Application from '../src/application';
 
 class ConfigService {
     port: number;
     host: string;
     options: { port: number; host: string };
-    declare $app?: any;
+    declare $app?: unknown;
 
     constructor(port: number = 3000, host: string = 'localhost') {
         this.port = port;
@@ -198,18 +199,20 @@ describe('Container Application Comprehensive Unit Tests', () => {
             const loadedDefault = app.loadPath('~/src/application');
             expect(loadedDefault).toBeDefined();
 
-            (app as any).basePath = () => __dirname;
+            const appWithBasePath = app as unknown as { basePath?: () => string };
+            appWithBasePath.basePath = () => __dirname;
             const loadedWithBasePath = app.loadPath('~/application.test');
             expect(loadedWithBasePath).toBeDefined();
-            delete (app as any).basePath;
+            delete appWithBasePath.basePath;
         });
     });
 
     describe('Aliasing & Path Resolution', () => {
         test('alias() sets global variables and getAlias() resolves recursively', () => {
             app.alias({ TestGlobalAlias: 'active' });
-            expect(global.TestGlobalAlias).toBe('active');
-            delete global.TestGlobalAlias;
+            const globalObj = globalThis as unknown as Record<string, unknown>;
+            expect(globalObj.TestGlobalAlias).toBe('active');
+            delete globalObj.TestGlobalAlias;
 
             app.$aliases = {
                 'app.config': 'config',
