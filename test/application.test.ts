@@ -367,6 +367,33 @@ describe('Container Application Comprehensive Unit Tests', () => {
             app.__set(app, 'dynamicField', 'testing');
             expect(app.dynamicField).toBe('testing');
         });
+
+        test('uncovered branches: alias default, wrap default, setInstance default, singleton returning class, getOrCreateSingleton without concrete', () => {
+            app.alias();
+            const wrapped = app.wrap(function() { return 123; });
+            expect(wrapped.call({ apply: (fn: Function, args: any[]) => fn(...args) })).toBe(123);
+            app.setInstance();
+            expect(app.$instance).toBeNull();
+
+            // Singleton returning a class constructor from factory
+            class NestedService {
+                public isNested = true;
+            }
+            app.singleton('nested', () => NestedService);
+            const nestedInst = app.make('nested');
+            expect(nestedInst).toBeInstanceOf(NestedService);
+            expect(nestedInst.isNested).toBe(true);
+
+            // getOrCreateSingleton when concrete is not provided or not function
+            expect(app.getOrCreateSingleton('missing_abstract')).toBeUndefined();
+
+            // Singleton returning a non-class object from factory
+            app.singleton('plainFactory', () => ({ ok: true }));
+            expect(app.make('plainFactory')).toEqual({ ok: true });
+
+            // call with default parameters
+            expect(app.call(() => () => 'called_default')).toBe('called_default');
+        });
     });
 
 });
