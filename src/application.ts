@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { IContainer, BindingDefinition } from '@ostro/contracts/container/application';
 import ApplicationContract from '@ostro/contracts/container/application';
 import { IsClass, isset, is_null } from '@ostro/support/function';
@@ -52,7 +52,7 @@ class Application extends Macroable.extend(ApplicationContract) implements ICont
      */
     public alias(alias: Record<string, any> = {}): void {
         for (const aliasKey in alias) {
-            (global as any)[aliasKey] = alias[aliasKey];
+            global[aliasKey] = alias[aliasKey];
         }
     }
 
@@ -198,13 +198,16 @@ class Application extends Macroable.extend(ApplicationContract) implements ICont
         if (typeof dir === 'string') {
             let targetPath = dir;
             if (targetPath.startsWith('~/')) {
-                const basePath = (this as any).basePath ? (this as any).basePath() : process.cwd();
+                const basePath = typeof this.basePath === 'function' ? this.basePath() : process.cwd();
                 targetPath = path.resolve(basePath, targetPath.slice(2));
             } else if (targetPath.startsWith('./')) {
                 targetPath = path.resolve(targetPath);
             }
             const mod: any = require(targetPath);
-            return (mod && (mod.__esModule || mod.default) && mod.default ? mod.default : mod) as T;
+            if (mod && (mod.__esModule || Object.prototype.hasOwnProperty.call(mod, 'default')) && mod.default) {
+                return mod.default as T;
+            }
+            return mod as T;
         }
         return dir as T;
     }
@@ -383,7 +386,7 @@ class Application extends Macroable.extend(ApplicationContract) implements ICont
      */
     public getInstance(): Application {
         if (is_null(this.$instance)) {
-            this.$instance = new (this.constructor as any)();
+            this.$instance = new Application();
         }
         return this.$instance!;
     }
